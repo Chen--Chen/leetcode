@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "connectionTimeout": 3600,
+            "database": "immigration",
+            "dialect": "MySQL",
+            "name": "immigration_salary",
+            "password": "2514",
+            "port": 3306,
+            "server": "localhost",
+            "username": "root"
+        }
+    ]
+}

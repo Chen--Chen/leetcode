@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-#####################
 ##### 1.Two Sum #####
-#####################
 """
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
@@ -16,10 +14,7 @@ class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
 """
 
-
-
-
-class Solution1:       
+class Solution:       
     def twoSum(self,nums,target):
         for i in range(len(nums)):
             a = nums[i]
@@ -36,7 +31,7 @@ class Solution1:
                 break
 
 
-class Solution2:
+class Solution:
     def twoSum(self, nums, target):
         """
         :type nums: List[int]
@@ -52,9 +47,57 @@ class Solution2:
                 return [h[n], i]
 
 
+
+
+##### 1119. Remove Vowels from a String #####
+class Solution:
+    def removeVowels(self, S):
+        vowellist = ['a','e','i','o','u']
+        outputstr=""
+        for l in S:
+            if l not in vowellist:
+                outputstr=outputstr+l
+        return(outputstr)
+
+
+
+##### 1108. Defanging an IP Address #####
+class Solution:
+    def defangIPaddr(self,address):
+        outputstr=""
+        for l in address:
+            if l==".":
+                outputstr=outputstr+"[.]"
+            else:
+                outputstr=outputstr+l
+        return outputstr
+
+
+##### 1342. Number of Steps to Reduce a Number to Zero ##### 
+class Solution:
+    def numberOfSteps(self, num):
+        i=0
+        while num!=0:
+            if num%2==0:
+                num=num/2
+            else:
+                num = num-1
+            i = i+1
+        return i
+
+
+class Solution:
+    def numJewelsInStones(self, J, S):
+        Jlist = [j for j in J]
+        Slist = [s for s in S if s in Jlist]
+        return len(Slist)
+
+class Solution:
+    def subtractProductAndSum(self, n):
+        productdigit=1
+        sumdigit=0
+        while n>0
+
 if __name__ == '__main__':
-    n = Solution1()
-    #n = Solution2()
-    print(n.twoSum([3,2,4], 6))
-    print(n.twoSum([2,7,11,15], 9))
-    print(n.twoSum([-1,-2,-3,-4,-5],-8))
+    n = Solution()
+    print(n.numJewelsInStones("aA", "aAAbbb"))
