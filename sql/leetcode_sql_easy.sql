@@ -465,7 +465,6 @@ select c.customer_id,
                 and sum(product_name='C')=0)
 
 
-<<<<<<< Updated upstream
 /* 1077. Project Employees III */
 select p.project_id, p.employee_id
     from Project p
@@ -515,7 +514,6 @@ select business_id
     on e.event_type=t.event_type and e.occurences>t.avg_occ
     group by business_id 
     having count(*)>1
-=======
 /* 1355. Activity Participants */
 select activity
     from Friends
@@ -599,7 +597,6 @@ select * from
  ) u2
 
 
->>>>>>> Stashed changes
 
 
 /* 626. Exchange Seats */
@@ -617,10 +614,17 @@ select user_id as buyer_id,
     group by user_id,join_date
 
 
-
-
-
-
+/* 1070. Product Sales Analysis III */
+select s.product_id,
+       s.year as first_year,
+       s.quantity,
+       s.price
+    from Sales s
+    join 
+    (select product_id, min(year) as first_year
+        from Sales
+        group by product_id) y
+    on s.product_id = y.product_id and s.year=y.first_year
 
 
 /* 184. Department Highest Salary */
