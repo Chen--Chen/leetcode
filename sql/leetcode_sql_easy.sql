@@ -465,6 +465,7 @@ select c.customer_id,
                 and sum(product_name='C')=0)
 
 
+<<<<<<< Updated upstream
 /* 1077. Project Employees III */
 select p.project_id, p.employee_id
     from Project p
@@ -514,6 +515,91 @@ select business_id
     on e.event_type=t.event_type and e.occurences>t.avg_occ
     group by business_id 
     having count(*)>1
+=======
+/* 1355. Activity Participants */
+select activity
+    from Friends
+    group by activity
+    having count(id) not in     
+    (select max(counts)
+        from(
+            select activity, count(id) as counts
+            from Friends
+            group by activity
+            )u
+     union all
+     select min(counts)
+        from(
+            select activity, count(id) as counts
+            from Friends
+            group by activity
+            )u
+    )
+
+with temp as 
+(select activity, count(distinct id)as num)
+    from friends
+    group by activity)
+select temp.activity
+    from temp
+    where temp.num!=(select max(num) from temp)
+    and temp.num!=(select min(num) from temp)
+
+select name as activity
+    from (select a.name, 
+                rank() over(order by count(f.id) desc) rank1,
+                rank() over(order by count(f.id) ) rank2
+                from activities a
+                left join friends f
+                on a.name=f.activity
+                group by a.name) tp
+    where rank1!=1 and rank2!=1
+
+
+/* 570. Managers with at Least 5 Direct Reports */
+select m.Name as Name
+    from Employee m
+    left outer join Employee e
+    on m.Id = e.ManagerId
+    group by m.Name
+    having count(e.Name)>=5
+
+
+
+/* 1341. Movie Rating */
+select * from 
+(select u.name as results
+    from
+    (select user_id, 
+            count(rating) as movie_counts
+        from Movie_Rating
+        group by user_id
+    )m
+    left outer join Users u
+    on m.user_id = u.user_id
+    order by movie_counts desc, u.name asc
+    limit 1
+ ) u1
+ 
+ union all
+ 
+ select * from (
+ select m1.title
+    from 
+    (select movie_id,
+            avg(rating) as avg_rating
+        from Movie_Rating
+        where created_at between '2020-02-01' and '2020-02-29'
+        group by movie_id
+    )r
+    left outer join Movies m1
+    on r.movie_id = m1.movie_id
+    order by avg_rating desc, m1.title asc
+    limit 1
+ ) u2
+
+
+>>>>>>> Stashed changes
 
 
 /* 626. Exchange Seats */
