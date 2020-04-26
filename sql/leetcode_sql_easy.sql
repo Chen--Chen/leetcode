@@ -452,7 +452,6 @@ select e1.employee_id
     where e1.employee_id!=1 and e3.manager_id=1
 
 
-
 /* 1398. Customers Who Bought Products A and B but Not C */
 select c.customer_id,
        customer_name
@@ -466,7 +465,75 @@ select c.customer_id,
                 and sum(product_name='C')=0)
 
 
+/* 1077. Project Employees III */
+select p.project_id, p.employee_id
+    from Project p
+    left outer join Employee e
+    on p.employee_id = e.employee_id
+    inner join 
+    (select p.project_id, 
+           max(e.experience_years) as max_experience_years
+        from Project p
+        left outer join Employee e
+        on p.employee_id = e.employee_id
+        group by p.project_id) m
+    on p.project_id = m.project_id and e.experience_years = m.max_experience_years
+
+
+select t.project_id, t.employee_id
+    from 
+        (select p1.project_id, 
+                p1.employee_id, 
+                DENSE_RANK() OVER (PARTITION BY p1.project_id ORDER BY e1.experience_years DESC) AS r
+            from Project p1 
+            join Employee e1 
+            on p1.employee_id = e1.employee_id
+    ) as t
+where t.r = 1
+
+
+/* 1126. Active Businesses */
+select e.business_id       
+    from Events e
+    left outer join 
+    (select event_type, avg(occurences) as avg_occurences
+        from Events
+        group by event_type
+     ) o
+     on e.event_type = o.event_type
+     group by e.business_id
+     having sum(case when e.occurences>o.avg_occurences then 1 else 0 end)>1
+
+select business_id 
+    from events e 
+    join
+        (select event_type
+                ,avg(occurences) as avg_occ 
+            from events 
+            group by event_type) t
+    on e.event_type=t.event_type and e.occurences>t.avg_occ
+    group by business_id 
+    having count(*)>1
+
+
 /* 626. Exchange Seats */
+
+
+/* 1158. Market Analysis I */
+select user_id as buyer_id,
+       join_date,
+       count(o.buyer_id) as orders_in_2019
+    from Users u
+    left outer join 
+    (select * from Orders 
+        where order_date between "2019-01-01" and "2019-12-31")o
+    on u.user_id = o.buyer_id
+    group by user_id,join_date
+
+
+
+
+
 
 
 
