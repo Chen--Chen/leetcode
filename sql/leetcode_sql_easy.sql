@@ -88,6 +88,9 @@ select round(
     from Delivery
     
 
+/* 1407. Top Travellers */
+
+
 /* 595. Big Countries */
 select name,
        population,
@@ -121,6 +124,10 @@ select product_name,
     group by product_name
     having sum(unit)>=100
 
+
+/* 627. Swap Salary */
+
+
 /* 1050. Actors and Directors Who Cooperated At Least Three Times */
 select actor_id,
        director_id
@@ -135,6 +142,9 @@ select customer_number
     group by customer_number
     order by count(*) desc
     limit 1
+
+
+/* 1082. Sales Analysis I */
 
 
 /* 584. Find Customer Referee */
@@ -351,7 +361,6 @@ select activity_date as day,
     having abs(datediff(day,'2019-07-27'))<30  
 
 
-
 /* 1076. Project Employees II */
 select project_id
     from Project
@@ -365,7 +374,6 @@ select project_id
             group by project_id
         ) e 
     )
-
 
 
 /* 1083. Sales Analysis II */
@@ -408,6 +416,12 @@ select max(num) as num
         having count(*)=1) u
 
 
+/* 597. Friend Requests I: Overall Acceptance Rate */
+
+
+/* 196. Delete Duplicate Emails */
+
+
 /* 596. Classes More Than 5 Students */
 select class from courses
 group by class
@@ -420,6 +434,9 @@ select c.Id
     left outer join Weather p
     on DATEDIFF(c.RecordDate, p.RecordDate)=1
     where c.Temperature>p.Temperature
+
+
+/* 1142. User Activity for the Past 30 Days II */
 
 
 /* 176. Second Highest Salary */
@@ -452,6 +469,15 @@ select e1.employee_id
     where e1.employee_id!=1 and e3.manager_id=1
 
 
+/* 1308. Running Total for Different Genders */
+
+
+/* 1285. Find the Start and End Number of Continuous Ranges */
+
+
+/* 1421. NPV Queries */
+
+
 /* 1398. Customers Who Bought Products A and B but Not C */
 select c.customer_id,
        customer_name
@@ -463,6 +489,9 @@ select c.customer_id,
     having (sum(product_name='A')>=1 
                 and sum(product_name='B')>=1
                 and sum(product_name='C')=0)
+
+
+/* 534. Game Play Analysis III */
 
 
 /* 1077. Project Employees III */
@@ -514,6 +543,8 @@ select business_id
     on e.event_type=t.event_type and e.occurences>t.avg_occ
     group by business_id 
     having count(*)>1
+
+
 /* 1355. Activity Participants */
 select activity
     from Friends
@@ -563,6 +594,38 @@ select m.Name as Name
     having count(e.Name)>=5
 
 
+/* 608. Tree Node */
+select id,
+       case when t.p_id is null then 'Root'
+            when t.p_id is not null and p.p_id is null then 'Leaf'
+            when t.p_id is not null and p.p_id is not null then 'Inner' end as Type
+    from tree t
+    left outer join 
+    (select p_id from tree
+        group by p_id) p
+    on t.id = p.p_id
+
+select a.id, 
+       case when a.p_id is null then 'Root'
+            when a.id not in (select distinct(p_id) from tree where p_id is not null) then 'Leaf'
+            else 'Inner' end as Type
+    from tree a order by a.id
+
+
+/* 626. Exchange Seats */
+
+
+/* 1158. Market Analysis I */
+select user_id as buyer_id,
+       join_date,
+       count(o.buyer_id) as orders_in_2019
+    from Users u
+    left outer join 
+    (select * from Orders 
+        where order_date between "2019-01-01" and "2019-12-31")o
+    on u.user_id = o.buyer_id
+    group by user_id,join_date
+
 
 /* 1341. Movie Rating */
 select * from 
@@ -596,22 +659,6 @@ select * from
     limit 1
  ) u2
 
-
-
-
-/* 626. Exchange Seats */
-
-
-/* 1158. Market Analysis I */
-select user_id as buyer_id,
-       join_date,
-       count(o.buyer_id) as orders_in_2019
-    from Users u
-    left outer join 
-    (select * from Orders 
-        where order_date between "2019-01-01" and "2019-12-31")o
-    on u.user_id = o.buyer_id
-    group by user_id,join_date
 
 
 /* 1070. Product Sales Analysis III */
